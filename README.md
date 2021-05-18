@@ -4,7 +4,8 @@ A discord bot that checks for commonly asked questions using natural language pr
 ### Hosting
 I could not host this bot on Heroku due to their memory limit. If you'd like to run a version of this bot on your machine, follow the instructions below.
 <br>
-Open the "config.json" file and insert the bot token, client id, and guild id. Then run the following commands in your terminal.
+- Open the "config.json" file and insert the bot token, client id, and guild id.
+- Run the following commands in your terminal.
 ```
 > pip install -r requirements.txt 
 > python3 bot.py
