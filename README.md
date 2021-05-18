@@ -20,7 +20,7 @@ The bot will now answer questions in that channel!
 #### Hosting
 This bot is hosted for free on Heroku but if you'd like to run a version of it on your machine, follow the following instructions.
 <br>
-
+Open the "config.json" file and insert the bot token, client id, guild id, and github oath. Then run the following commands in your terminal.
 ```
 > pip install -r requirements.txt 
 > python3 bot.py
