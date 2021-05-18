@@ -1,0 +1,7 @@
+{
+    "botToken": "[BOT TOKEN]",
+    "inviteLink": "https://discord.com/oauth2/authorize?client_id=[CLIENT ID]&scope=bot&permissions=8",
+    "githubOath": "[GITHUB OATH]",
+    "channel": 843971874551234591,
+    "guild": 755809763035447306
+}
