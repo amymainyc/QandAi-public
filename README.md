@@ -26,3 +26,9 @@ Use `!addqa` to add questions and answers.
 The bot will now answer questions in that channel!
 <img src="https://i.imgur.com/lvbqM12.png"><br>
 <img src="https://i.imgur.com/OcK7rxX.png"><br>
+
+### Improvements
+Given the time, I would:
+- Host the bot
+- Add a command to remove questions and answers
+- Tweak/improve the NLP system to make it more accurate
