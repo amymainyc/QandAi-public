@@ -2,9 +2,6 @@ from discord.ext import commands
 import discord
 import json
 from loguru import logger
-import aiohttp
-import base64
-import asyncio
 import spacy
 import scispacy
 
