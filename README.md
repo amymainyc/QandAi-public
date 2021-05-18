@@ -1,8 +1,18 @@
 ## 🚀 Slingshot Bot
-A discord bot that checks for commonly asked questions and answers them using natural language processing (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)).
+A discord bot that checks for commonly asked questions and answers them (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)).
+
+### Hosting
+I could not host this bot on Heroku due to their memory limit. If you'd like to run a version of this bot on your machine, follow the instructions below.
+<br>
+Open the "config.json" file and insert the bot token, client id, and guild id. Then run the following commands in your terminal.
+```
+> pip install -r requirements.txt 
+> python3 bot.py
+```
+<br>
 
 ### Setup
-Invite the bot to the server using [this link](https://discord.com/oauth2/authorize?client_id=843968680680488980&scope=bot&permissions=8). This bot will only work on the official Slingshot server.
+Invite the bot to the server using the link in "config.json". This bot will only work on the official Slingshot server.
 <br>
 
 Use `!setchannel` to select a channel for the bot to watch over.
@@ -16,12 +26,3 @@ Use `!addqa` to add questions and answers.
 The bot will now answer questions in that channel!
 <img src="https://i.imgur.com/lvbqM12.png"><br>
 <img src="https://i.imgur.com/OcK7rxX.png"><br>
-
-#### Hosting
-This bot is hosted for free on Heroku but if you'd like to run a version of it on your machine, follow the following instructions.
-<br>
-Open the "config.json" file and insert the bot token, client id, guild id, and github oath. Then run the following commands in your terminal.
-```
-> pip install -r requirements.txt 
-> python3 bot.py
-```

@@ -31,8 +31,6 @@ class General(commands.Cog):
         channelName = self.client.get_channel(channelID).name
         activity = discord.Activity(type=discord.ActivityType.watching, name=f"#{channelName}")
         await self.client.change_presence(activity=activity)
-        await asyncio.sleep(43200)
-        await self.pushToGitHub()
 
 
 
@@ -47,52 +45,6 @@ class General(commands.Cog):
             return await ctx.send("```Too many arguments! Check !help for usage instructions.```")
         else:
             logger.exception(exception)
-
-
-
-    async def pushToGitHub(self):
-        # push files to GitHub
-        logger.info("Pushing latest files to GitHub.")
-        filenames = ["config.json"]
-        for filename in filenames: 
-            try:
-                token = config["githubOath"]
-                repo = "amymainyc/slingshot-bot"
-                branch = "main"
-                url = "https://api.github.com/repos/" + repo + "/contents/" + filename
-
-                base64content = base64.b64encode(open(filename, "rb").read())
-
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url + '?ref=' + branch, headers={"Authorization": "token " + token}) as data:
-                        data = await data.json()
-                sha = data['sha']
-
-                if base64content.decode('utf-8') + "\n" != data['content']:
-                    message = json.dumps(
-                        {"message": "Automatic data update.",
-                            "branch": branch,
-                            "content": base64content.decode("utf-8"),
-                            "sha": sha}
-                    )
-
-                    async with aiohttp.ClientSession() as session:
-                        async with session.put(
-                            url, data=message, headers={"Content-Type": "application/json", "Authorization": "token " + token}
-                        ) as resp:
-                            print(resp)
-
-            except Exception as e:
-                logger.exception(e)
-
-
-
-    @commands.command()
-    async def gitPush(self, ctx):
-        # push files to GitHub
-        if ctx.author.id == 430079880353546242:
-            await ctx.send("Pushing latest files to GitHub.")
-            await self.pushToGitHub()
 
 
 
@@ -167,6 +119,7 @@ class General(commands.Cog):
                 await message.edit(content="```This question and answer has been added.```")
             except asyncio.TimeoutError:
                 return await message.clear_reactions()
+
 
 
 def setup(client):

@@ -1,7 +1,7 @@
 {
-    "botToken": "[BOT TOKEN]",
-    "inviteLink": "https://discord.com/oauth2/authorize?client_id=[CLIENT ID]&scope=bot&permissions=8",
-    "githubOath": "[GITHUB OATH]",
+    "botToken": "ODQzOTY4NjgwNjgwNDg4OTgw.YKLlFQ.bP6TZ5yJvTwvHqM-m9Cey-ta6OQ",
+    "inviteLink": "https://discord.com/oauth2/authorize?client_id=843968680680488980&scope=bot&permissions=8",
+    "githubOath": "fccdc9bd9453a4d163b617fa9b461058ca5aa574",
     "channel": 843971874551234591,
-    "guild": "[GUILD ID (int)]"
+    "guild": 755809763035447306
 }
