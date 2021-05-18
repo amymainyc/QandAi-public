@@ -13,7 +13,7 @@ I could not host this bot on Heroku due to their memory limit. If you'd like to 
 <br>
 
 ### Setup
-Invite the bot to the server using the link in "config.json". This bot will only work on the official Slingshot server.
+Invite the bot to the server using the link in "config.json". This bot will only work on the server that you set.
 <br>
 
 Use `!setchannel` to select a channel for the bot to watch over.
