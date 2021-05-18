@@ -30,6 +30,6 @@ The bot will now answer questions in that channel!
 
 ### Improvements
 Given the time, I would:
-- Host the bot
+- Find a viable host for the bot
 - Add a command to remove questions and answers
 - Tweak/improve the NLP system to make it more accurate
