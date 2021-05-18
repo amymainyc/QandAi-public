@@ -1,0 +1,28 @@
+{
+    "q&a": [
+        {
+            "question": "Are you guys still looking for a graphic design intern?",
+            "answer": "Yeah! Just send us an email to info@slingshotmentoring.com with a portfolio!"
+        },
+        {
+            "question": "What all is asked in the Slingshot technical interview?",
+            "answer": "Algorithms and data structures, Big O, recursion etc"
+        },
+        {
+            "question": "If you got the final round thing through a hackathon can that carry over to a future internship round?",
+            "answer": "We can't guarantee direct admission to another term at this time, but we're going to be moving to a rolling structure using our platform very soon in which case you can definitely use it to get an internship for another term."
+        },
+        {
+            "question": "How do we view the startups?",
+            "answer": "Once you're accepted, there is an email with a link to an Airtable sheet where you can see the startup positions."
+        },
+        {
+            "question": "wait how are we supposed to match on 5/24 when we might not get the first response until 5/15?",
+            "answer": "5/24 is a tentative start date around which there's enough flexibility -- don't worry"
+        },
+        {
+            "question": "Do we get a response even if we don't pass to the next stage?",
+            "answer": "Yes, everyone should receive a response by may 15th."
+        }
+    ]
+}
