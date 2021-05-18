@@ -1,5 +1,5 @@
 ## 🚀 Slingshot Bot
-A discord bot that checks for commonly asked questions and answers them (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)).
+A discord bot that checks for commonly asked questions using natural language processing and answers them (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)).
 
 ### Hosting
 I could not host this bot on Heroku due to their memory limit. If you'd like to run a version of this bot on your machine, follow the instructions below.
