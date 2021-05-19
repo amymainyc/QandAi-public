@@ -1,6 +1,6 @@
 {
     "botToken": "[BOT TOKEN]",
-    "inviteLink": "https://discord.com/oauth2/authorize?client_id=[CLIENT ID]&scope=bot&permissions=8"
+    "inviteLink": "https://discord.com/oauth2/authorize?client_id=[CLIENT ID]&scope=bot&permissions=8",
     "channel": 843971874551234591,
     "guild": "[GUILD ID (int)]"
 }
