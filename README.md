@@ -56,7 +56,7 @@ This bot is hosted on Heroku and is free for everyone to use. However, if you'd 
 
 ### Changelog
 ##### v1.1 - 5/22/2021
-- Expanded bot to work in different guilds
+- Expanded bot to work in different guilds.
 - Renamed `!setchannel` to `addchannel`.
 - Added `!help`, `!removechannel`,`!removeqa`, and `!viewqa`.
 - Set up a firebase database.
