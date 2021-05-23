@@ -41,6 +41,7 @@ Use `!viewqa` to get a link to the questions/answers in the database.
 Once you've added a channel and some questions, the bot will answer questions in that channel!
 <br>
 <img src="https://i.imgur.com/oIzKwyj.png" width=600><br>
+</details>
 
 ### Hosting
 This bot is hosted on Heroku and is free for everyone to use. However, if you'd like to run a version of this bot on your machine, follow the instructions below.
@@ -52,7 +53,6 @@ This bot is hosted on Heroku and is free for everyone to use. However, if you'd 
 > pip install -r requirements.txt 
 > python3 bot.py
 ```
-</details>
 
 ### Changelog
 ##### v1.1 - 5/22/2021
