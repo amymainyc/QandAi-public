@@ -2,9 +2,8 @@ import os
 from discord.ext import commands
 from loguru import logger
 import json
-import discord
 
-with open("config.json", "r") as f:
+with open("data/config.json", "r") as f:
     config = json.load(f)
     
 token = config["botToken"]

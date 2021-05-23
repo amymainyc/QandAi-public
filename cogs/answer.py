@@ -7,9 +7,9 @@ from datetime import date
 
 
 
-nlp = spacy.load("en_core_sci_md")
+nlp = spacy.load("en_core_sci_sm")
 
-with open('config.json') as d:
+with open('data/config.json') as d:
     config = json.load(d)
 
 
@@ -25,59 +25,53 @@ class Answer(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        # checking messages in questions channel
-        channelID = config["channel"]
-        if message.channel.id == channelID:
-            m = message.content
-            if "?" in m:
-                channel = self.client.get_channel(channelID)
-                with open("questions.json") as f:
-                    questionData = json.load(f)["q&a"]
-                mostSimilar = {}
-                mostSimilarNum = 0
-                for q in questionData:
-                    question = q["question"]
-                    keywordSimilarity = self.getKeywordSimilarity(question, m)
-                    if keywordSimilarity > 0.5:
-                        similarity = self.getOverallSimilarity(question, m)
-                        if similarity > mostSimilarNum:
-                            mostSimilarNum = similarity
-                            mostSimilar = q
-                if mostSimilarNum > 0.5:
-                    question = mostSimilar["question"]
-                    answer = mostSimilar["answer"]
-                    embed = discord.Embed(
-                        title="Thanks for your interest in Slingshot!",
-                        description="Your question is similar to the previously answered question below. If this is irrelevant, feel free to disregard this message."
-                    )
-                    embed.add_field(name=f"**Q: **{question}", value=f"**A: **{answer}", inline=False)
-                    embed.set_footer(text=f"{message.guild.name} • {str(date.today().strftime('%d/%m/%Y'))}", icon_url=self.client.user.avatar_url)
-                    await channel.send(embed=embed)
+        """
+        Checking messages in questions channels for matches.
+        """
+        with open("data/database.json") as f:
+            questionData = json.load(f)
+        for guildID in questionData:
+            channelID = str(message.channel.id)
+            if channelID in questionData[guildID]:
+                msg = message.content
+                if "?" in msg:
+                    channel = self.client.get_channel(channelID)
+                    questionData = questionData[guildID][channelID]
+                    similar = []
+                    for qa in questionData:
+                        keywordSimilarity = self.getKeywordSimilarity(qa["k"], msg)
+                        if keywordSimilarity > 0.5:
+                            similarity = self.getOverallSimilarity(qa["q"], msg)
+                            if similarity > 0.5:
+                                similar.append(qa)
+                    if similar:
+                        embed = discord.Embed(
+                            title="Hey there!",
+                            description="Your question is similar to the previously answered questions below. If this is irrelevant, feel free to disregard this message."
+                        )
+                        embed.set_footer(text=f"{message.guild.name} • {str(date.today().strftime('%d/%m/%Y'))}", icon_url=self.client.user.avatar_url)
+                        for qa in similar:
+                            embed.add_field(name=f"**Q: **{qa['q']}", value=f"**A: **{qa['a']}", inline=False)
+                        return await message.reply(embed=embed)
             
 
 
-    def getKeywords(self, question):
-        return nlp(question).ents
-
-
-
-    def getKeywordSimilarity(self, q1, q2):
-        k1 = self.getKeywords(q1)
+    def getKeywordSimilarity(self, keywords, message):
         match = 0
-        for keyword in k1:
-            if str(keyword).lower() in q2.lower():
+        for keyword in keywords:
+            if str(keyword).lower() in message.lower():
                 match += 1
-        if len(k1) > 0:
-            return match / len(k1)
+        if len(keywords) > 0:
+            return match / len(keywords)
         else:
             return 0
 
 
 
-    def getOverallSimilarity(self, q1, q2):
-        q1 = nlp(q1)
-        q2 = nlp(q2)
-        return q2.similarity(q1)
+    def getOverallSimilarity(self, question, message):
+        question = nlp(question)
+        message = nlp(message)
+        return message.similarity(question)
 
 
 
