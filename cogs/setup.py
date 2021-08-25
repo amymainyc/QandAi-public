@@ -3,19 +3,13 @@ import discord
 import json
 from loguru import logger
 import asyncio
-import spacy
-import scispacy
-import pyrebase
+from utils.firebase import *
+from utils.nlp import *
 
 
 
 with open('data/config.json') as d:
     config = json.load(d)
-
-nlp = spacy.load("en_core_sci_sm")
-
-firebase = pyrebase.initialize_app(config["firebase"])
-db = firebase.database()
 
 
 
@@ -25,14 +19,15 @@ class Setup(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        self.db = Firebase()
+        self.nlp = NLP()
 
 
 
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def viewQA(self, ctx):
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
 
         # check if questions channel has been set up
         guildID = str(ctx.guild.id)
@@ -67,8 +62,7 @@ class Setup(commands.Cog):
         """
         Adds channels to watch.
         """
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
 
         guildID = str(ctx.guild.id)
 
@@ -80,8 +74,11 @@ class Setup(commands.Cog):
             await ctx.send("```Please reply with the channel id for a channel to watch:```")
             channelID = await self.client.wait_for('message', check=whosent, timeout=300)
             channelID = channelID.content
-            channel = ctx.guild.get_channel(int(channelID))
-            if channel is None:
+            try:
+                channel = ctx.guild.get_channel(int(channelID))
+                if channel is None:
+                    return await ctx.send("```Invalid channel ID. Please check and try again.```")
+            except:
                 return await ctx.send("```Invalid channel ID. Please check and try again.```")
 
         except asyncio.TimeoutError:
@@ -99,11 +96,20 @@ class Setup(commands.Cog):
             await message.clear_reactions()
 
             # add channel and guild to database
-            if not guildID in questionData or not channelID in questionData[guildID]:
-                questionData[guildID][channelID] = [{"placeholder": "placeholder"}]
-            with open("data/database.json", "w") as f:
-                json.dump(questionData, f, indent=4)
-            self.updateFirebase()
+            if not guildID in questionData:
+                questionData.update(
+                    {
+                        guildID : {
+                            channelID : [{"placeholder": "placeholder"}]    
+                        }
+                    }
+                )
+            else:
+                if not channelID in questionData[guildID]:
+                    questionData[guildID][channelID] = [{"placeholder": "placeholder"}]  
+                else:
+                    return await message.edit(content="```This channel has already been added previously.```")
+            self.db.updateQA(questionData)
 
             await message.edit(content="```The channel has been added.```")
         except asyncio.TimeoutError:
@@ -118,8 +124,7 @@ class Setup(commands.Cog):
         """
         Removes channels from watch list.
         """
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
 
         guildID = str(ctx.guild.id)
 
@@ -131,8 +136,11 @@ class Setup(commands.Cog):
             await ctx.send("```Please reply with the channel id to remove from the bot's watch list:```")
             channelID = await self.client.wait_for('message', check=whosent, timeout=300)
             channelID = channelID.content
-            channel = ctx.guild.get_channel(int(channelID))
-            if channel is None:
+            try:
+                channel = ctx.guild.get_channel(int(channelID))
+                if channel is None:
+                    return await ctx.send("```Invalid channel ID. Please check and try again.```")
+            except:
                 return await ctx.send("```Invalid channel ID. Please check and try again.```")
 
         except asyncio.TimeoutError:
@@ -148,9 +156,7 @@ class Setup(commands.Cog):
             if questionData[guildID] == {}:
                 questionData.pop(guildID)
 
-        with open("data/database.json", "w") as f:
-            json.dump(questionData, f, indent=4)
-        self.updateFirebase()
+        self.db.updateQA(questionData)
 
         await ctx.send("```The channel has been removed.```")
 
@@ -162,8 +168,7 @@ class Setup(commands.Cog):
         """
         Adds questions to the database.
         """
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
 
         # check if questions channel has been set up
         guildID = str(ctx.guild.id)
@@ -193,6 +198,10 @@ class Setup(commands.Cog):
                     return await ctx.send("```This channel has not been added to the database yet. Add it with !addchannel and try this command again.```")
             else:
                 channelID = list(questionData[guildID])[0]
+            try:
+                int(channelID)
+            except:
+                return await ctx.send("```Invalid channel ID. Please check and try again.```")
 
         except asyncio.TimeoutError:
             return await ctx.send("```You took too long \:( Please try the command again.```")
@@ -209,18 +218,15 @@ class Setup(commands.Cog):
             await message.clear_reactions()
 
             # add question, answer, and keywords to database
-            keywords = self.getKeywords(question)
+            keywords = self.nlp.getKeywords(question)
             data = {"q": question, "a": answer, "k": keywords}
-            with open("data/database.json") as f:
-                questionData = json.load(f)
+            questionData = self.db.getQA()
             
             if "placeholder" in questionData[guildID][channelID][0]:
                 questionData[guildID][channelID] = []
             questionData[guildID][channelID].append(data)
 
-            with open("data/database.json", "w") as f:
-                json.dump(questionData, f, indent=4)
-            self.updateFirebase()
+            self.db.updateQA(questionData)
 
             await message.edit(content="```This question and answer has been added.```")
         except asyncio.TimeoutError:
@@ -234,8 +240,7 @@ class Setup(commands.Cog):
         """
         Removes questions from the database.
         """
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
 
         # check if questions channel has been set up
         guildID = str(ctx.guild.id)
@@ -266,34 +271,18 @@ class Setup(commands.Cog):
 
         # check if the question is there and remove it
         channelqa = questionData[guildID][channelID]
+        if channelqa == [{"placeholder": "placeholder"}]:
+            return await ctx.send("```There are no questions/answers added for this channel.```")
         for qa in channelqa:
             if qa["q"] == question:
                 channelqa.remove(qa)
+                questionData[guildID][channelID] = channelqa
                 if channelqa == []:
                     questionData[guildID][channelID] = [{"placeholder": "placeholder"}]
-                questionData[guildID][channelID] = channelqa
-                with open("data/database.json", "w") as f:
-                    json.dump(questionData, f, indent=4)
-                self.updateFirebase()
+                self.db.updateQA(questionData)
                 await ctx.send("```Question has been removed from the database.```")
                 return
         await ctx.send("```The question given is not in the database. If you need help finding the question, try !viewqa.```")
-
-
-
-    def updateFirebase(self):
-        with open("data/database.json") as f:
-            data = json.load(f)
-        db.child("qa").set(data)
-
-
-
-    def getKeywords(self, question):
-        keywords = nlp(question).ents
-        keywordArr = []
-        for k in keywords:
-            keywordArr.append(str(k))
-        return keywordArr
 
 
 

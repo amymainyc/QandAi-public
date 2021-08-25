@@ -7,7 +7,7 @@ with open("data/config.json", "r") as f:
     config = json.load(f)
     
 token = config["botToken"]
-client = commands.Bot(command_prefix='!', case_insensitive=True)
+client = commands.Bot(command_prefix=['s!', 'S!'], case_insensitive=True)
 client.remove_command('help')
 
 

@@ -2,8 +2,8 @@ from discord.ext import commands
 import discord
 import json
 from loguru import logger
-import pyrebase
 from datetime import date
+from utils.firebase import *
 
 
 
@@ -18,7 +18,7 @@ class General(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-
+        self.db = Firebase()
 
 
     @commands.Cog.listener()
@@ -26,19 +26,9 @@ class General(commands.Cog):
         """
         Bot startup tasts.
         """
-        self.getFirebase()
-        with open("data/database.json") as f:
-            questionData = json.load(f)
+        questionData = self.db.getQA()
         activity = discord.Activity(type=discord.ActivityType.watching, name=f"over {len(list(questionData))} servers!")
         await self.client.change_presence(activity=activity)
-        
-
-
-    def getFirebase(self):
-        firebase = pyrebase.initialize_app(config["firebase"])
-        db = firebase.database()
-        with open("data/database.json", "w") as f:
-            json.dump(db.child("qa").get().val(), f, indent=4)
 
 
 
@@ -55,6 +45,7 @@ class General(commands.Cog):
             return await ctx.send("```Too many arguments! Check !help for usage instructions.```")
         else:
             logger.exception(exception)
+            return await ctx.send("```An error occurred while performing this action. Please contact Moonflower#8861.```")
 
 
 
@@ -64,36 +55,36 @@ class General(commands.Cog):
         Help command.
         """
         embed = discord.Embed(
-            title="Slingshot Bot's Commands (!)"
+            title="Slingshot Bot's Commands (s!)"
         )
         embed.set_thumbnail(url=self.client.user.avatar_url)
         embed.add_field(
-            name="**!help**",
+            name="**s!help**",
             value="Responds with this message!",
             inline=False
         )
         embed.add_field(
-            name="**!addchannel**",
+            name="**s!addchannel**",
             value="Add a channel for the bot to watch. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**!removechannel**",
+            name="**s!removechannel**",
             value="Remove a channel from the bot's watch list. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**!addqa**",
+            name="**s!addqa**",
             value="Add a question and answer that the bot will look out for. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**!removeqa**",
+            name="**s!removeqa**",
             value="Remove a question and answer that the bot will look out for. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**!viewqa**",
+            name="**s!viewqa**",
             value="Sends the API link to view the question/answer database. \n`(server admin only)`",
             inline=False
         )
