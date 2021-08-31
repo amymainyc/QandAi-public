@@ -10,7 +10,7 @@ You can invite this bot to your server using [this link](https://discord.com/oau
 
 Use `q!help` for access the commands list.
 <br>
-<img src="https://i.imgur.com/5lnqfEc.png" width=600><br>
+<img src="https://i.imgur.com/ea1mGkr.png" width=600><br>
 <br>
 
 Use `q!invite` to get the invite link for the bot.
