@@ -1,5 +1,5 @@
-## 🚀 Slingshot Bot
-A discord bot that checks for previously answered questions using natural language processing and answers them (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)). Made for open-source sunday on the Slingshot Discord Server. 
+## 🚀 Q&Ai
+A discord bot that checks for commonly asked questions using natural language processing and answers them (made with [discord.py](https://discordpy.readthedocs.io/en/stable/api.html#) and [spaCy](https://spacy.io/)). Made for open-source sunday on the Slingshot Discord Server. 
 
 ### Invite
 You can invite this bot to your server using [this link](https://discord.com/oauth2/authorize?client_id=843968680680488980&scope=bot&permissions=85056)!

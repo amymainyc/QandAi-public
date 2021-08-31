@@ -37,12 +37,16 @@ class General(commands.Cog):
         """
         Error handling.
         """
+        if isinstance(exception, commands.CommandNotFound):
+            return await ctx.send("```Command not found! Check r.help for usage instructions.```")
+        if isinstance(exception, commands.MemberNotFound):
+            return await ctx.send('```Invalid user! Make sure you are tagging the right user.```')
         if isinstance(exception, commands.MissingRequiredArgument):
-            return await ctx.send("```You are missing required arguments! Check !help for usage instructions.```")
+            return await ctx.send("```You are missing required arguments! Check r.help for usage instructions.```")
         if isinstance(exception, commands.BadArgument):
-            return await ctx.send("```Invalid arguments! Check !help for usage instructions.```")
+            return await ctx.send("```Invalid arguments! Check r.help for usage instructions.```")
         if isinstance(exception, commands.TooManyArguments):
-            return await ctx.send("```Too many arguments! Check !help for usage instructions.```")
+            return await ctx.send("```Too many arguments! Check r.help for usage instructions.```")
         else:
             logger.exception(exception)
             return await ctx.send("```An error occurred while performing this action. Please contact Moonflower#8861.```")
@@ -55,7 +59,7 @@ class General(commands.Cog):
         Help command.
         """
         embed = discord.Embed(
-            title="Slingshot Bot's Commands (s!)"
+            title="Q&Ai's Commands (s!)"
         )
         embed.set_thumbnail(url=self.client.user.avatar_url)
         embed.add_field(
