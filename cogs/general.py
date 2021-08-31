@@ -67,23 +67,13 @@ class General(commands.Cog):
             inline=False
         )
         embed.add_field(
-            name="**q!addchannel**",
-            value="Add a channel for the bot to watch. \n`(server admin only)`",
+            name="**q!addchannel / q!removechannel**",
+            value="Adds/removes a channel for the bot to watch. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**q!removechannel**",
-            value="Remove a channel from the bot's watch list. \n`(server admin only)`",
-            inline=False
-        )
-        embed.add_field(
-            name="**q!addqa**",
-            value="Add a question and answer that the bot will look out for. \n`(server admin only)`",
-            inline=False
-        )
-        embed.add_field(
-            name="**q!removeqa**",
-            value="Remove a question and answer that the bot will look out for. \n`(server admin only)`",
+            name="**q!addqa / q!removeqa**",
+            value="Adds/removes a question and answer pair that the bot will look out for. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
@@ -95,6 +85,15 @@ class General(commands.Cog):
         embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {str(date.today().strftime('%m/%d/%Y'))}", icon_url=ctx.author.avatar_url)
         await ctx.message.reply(embed=embed)
     
+
+
+    @commands.command()
+    async def invite(self, ctx):
+        """
+        Invite command.
+        """
+        await ctx.send(config["inviteLink"])
+
 
 
 def setup(client):

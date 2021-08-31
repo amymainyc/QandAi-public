@@ -8,39 +8,34 @@ You can invite this bot to your server using [this link](https://discord.com/oau
 <details>
 <summary>Click to expand!</summary>
 
-Use `s!help` for access the commands list.
+Use `q!help` for access the commands list.
 <br>
-<img src="https://i.imgur.com/mIP3LdN.png" width=600><br>
-<br>
-
-Use `s!addchannel` to select a channel for the bot to watch.
-<br>
-<img src="https://i.imgur.com/obw8xbB.png" width=600><br>
+<img src="https://i.imgur.com/5lnqfEc.png" width=600><br>
 <br>
 
-Use `s!removechannel` to select a channel for the bot to watch.
+Use `q!invite` to get the invite link for the bot.
 <br>
-<img src="https://i.imgur.com/Ns0fbEw.png" width=600><br>
-<br>
-
-Use `s!addqa` to add questions and answers.
-<br>
-<img src="https://i.imgur.com/HVYrJEI.png" width=600><br>
+<img src="https://i.imgur.com/C4R5xCU.png" width=600><br>
 <br>
 
-Use `s!removeqa` to remove questions and answers.
+Use `q!addchannel`/`q!removechannel` to add/remove a channel for the bot to watch.
 <br>
-<img src="https://i.imgur.com/i7Nw2pR.png" width=600><br>
+<img src="https://i.imgur.com/LUUAyrq.png" width=600><br>
 <br>
 
-Use `s!viewqa` to get a link to the questions/answers in the database.
+Use `q!addqa`/`q!removeqa` to add/remove questions and answers.
 <br>
-<img src="https://i.imgur.com/NUqBXo7.png" width=600><br>
+<img src="https://i.imgur.com/HTEfWrd.png" width=600><br>
+<br>
+
+Use `q!viewqa` to get a link to the questions/answers in the database.
+<br>
+<img src="https://i.imgur.com/JtQ8Uwd.png" width=600><br>
 <br>
 
 Once you've added a channel and some questions, the bot will answer questions in that channel!
 <br>
-<img src="https://i.imgur.com/dzjXgXP.png" width=600><br>
+<img src="https://i.imgur.com/OihRzdg.png" width=600><br>
 </details>
 
 ### Hosting
@@ -57,7 +52,7 @@ This bot is hosted on Heroku and is free for everyone to use. However, if you'd 
 ### Changelog
 ##### v1.2 - 8/25/2021
 - Allow adding multiple channels.
-- Changed the prefix to `s!`
+- Changed the prefix to `q!`
 - Minor bug fixes.
 
 ##### v1.1 - 5/22/2021
