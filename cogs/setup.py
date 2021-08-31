@@ -32,7 +32,7 @@ class Setup(commands.Cog):
         # check if questions channel has been set up
         guildID = str(ctx.guild.id)
         if not guildID in questionData:
-            return await ctx.send("```You have not added a channel for me to watch. You can do so by running s!addchannel```")
+            return await ctx.send("```You have not added a channel for me to watch. You can do so by running q!addchannel```")
         
         def whosent(m):
             return m.author == ctx.author
@@ -44,7 +44,7 @@ class Setup(commands.Cog):
                 channelID = await self.client.wait_for('message', check=whosent, timeout=300)
                 channelID = channelID.content
                 if not channelID in questionData[guildID]:
-                    return await ctx.send("```This channel has not been added to the database yet. Add it with s!addchannel and try this command again.```")
+                    return await ctx.send("```This channel has not been added to the database yet. Add it with q!addchannel and try this command again.```")
             else:
                 channelID = list(questionData[guildID])[0]
 
@@ -173,7 +173,7 @@ class Setup(commands.Cog):
         # check if questions channel has been set up
         guildID = str(ctx.guild.id)
         if not guildID in questionData:
-            return await ctx.send("```You have not added a channel for me to watch. You can do so by running s!addchannel```")
+            return await ctx.send("```You have not added a channel for me to watch. You can do so by running q!addchannel```")
         
         def whosent(m):
             return m.author == ctx.author

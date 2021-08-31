@@ -38,15 +38,15 @@ class General(commands.Cog):
         Error handling.
         """
         if isinstance(exception, commands.CommandNotFound):
-            return await ctx.send("```Command not found! Check r.help for usage instructions.```")
+            return await ctx.send("```Command not found! Check q!help for usage instructions.```")
         if isinstance(exception, commands.MemberNotFound):
             return await ctx.send('```Invalid user! Make sure you are tagging the right user.```')
         if isinstance(exception, commands.MissingRequiredArgument):
-            return await ctx.send("```You are missing required arguments! Check r.help for usage instructions.```")
+            return await ctx.send("```You are missing required arguments! Check q!help for usage instructions.```")
         if isinstance(exception, commands.BadArgument):
-            return await ctx.send("```Invalid arguments! Check r.help for usage instructions.```")
+            return await ctx.send("```Invalid arguments! Check q!help for usage instructions.```")
         if isinstance(exception, commands.TooManyArguments):
-            return await ctx.send("```Too many arguments! Check r.help for usage instructions.```")
+            return await ctx.send("```Too many arguments! Check q!help for usage instructions.```")
         else:
             logger.exception(exception)
             return await ctx.send("```An error occurred while performing this action. Please contact Moonflower#8861.```")
@@ -59,36 +59,35 @@ class General(commands.Cog):
         Help command.
         """
         embed = discord.Embed(
-            title="Q&Ai's Commands (s!)"
+            title="Q&Ai's Commands (q!)"
         )
-        embed.set_thumbnail(url=self.client.user.avatar_url)
         embed.add_field(
-            name="**s!help**",
+            name="**q!help**",
             value="Responds with this message!",
             inline=False
         )
         embed.add_field(
-            name="**s!addchannel**",
+            name="**q!addchannel**",
             value="Add a channel for the bot to watch. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**s!removechannel**",
+            name="**q!removechannel**",
             value="Remove a channel from the bot's watch list. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**s!addqa**",
+            name="**q!addqa**",
             value="Add a question and answer that the bot will look out for. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**s!removeqa**",
+            name="**q!removeqa**",
             value="Remove a question and answer that the bot will look out for. \n`(server admin only)`",
             inline=False
         )
         embed.add_field(
-            name="**s!viewqa**",
+            name="**q!viewqa**",
             value="Sends the API link to view the question/answer database. \n`(server admin only)`",
             inline=False
         )
